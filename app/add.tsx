@@ -26,7 +26,7 @@ export default function AddContactScreen() {
   };
 
   return (
-    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+    <ImageBackground /* source={backgroundImage} */ style={styles.backgroundImage}>
       <View style={styles.container}>
         <Text style={styles.header}>Add New Contact</Text>
         <TextInput

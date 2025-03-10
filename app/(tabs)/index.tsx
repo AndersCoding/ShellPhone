@@ -35,7 +35,7 @@ export default function Index() {
   };
 
   return (
-    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+    <ImageBackground /* source={backgroundImage} */ style={styles.backgroundImage}>
       <View style={styles.container}>
         {contacts.length === 0 ? (
           // Hvis det ikke er noen kontakter, vis bildet
