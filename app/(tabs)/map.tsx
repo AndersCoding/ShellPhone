@@ -60,7 +60,7 @@ const MapScreen = () => {
       return;
     }
 
-    const message = `Hei, her er min lokasjon: https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
+    const message = `Hei, mine kordinater er: ${location.latitude} og ${location.longitude}. \nHer er min lokasjon: https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
 
     const isAvailable = await SMS.isAvailableAsync();
     if (isAvailable) {

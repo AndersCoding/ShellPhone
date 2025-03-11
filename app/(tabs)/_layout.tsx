@@ -7,7 +7,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Contacts",
+          title: "Ninja Contacts",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="people" color={color} size={size} />
           ),
@@ -16,7 +16,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="favourites"
         options={{
-          title: "Favorites",
+          title: "Ninja Favorites",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="star" color={color} size={size} />
           ),
@@ -25,7 +25,7 @@ export default function TabsLayout() {
       <Tabs.Screen
       name="map"
       options={{
-        title: "Maps",
+        title: "Ninja Map",
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="map" color={color} size={size} />
         ),
