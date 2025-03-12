@@ -5,6 +5,7 @@ export interface Contact {
   id: number;
   name: string;
   phone: string;
+  isFavorite?: boolean; // Nå kan kontakter være favoritter
 }
 
 export function useContacts() {
@@ -25,29 +26,39 @@ export function useContacts() {
     }
   };
 
-  const addContact = async (name: string, phone: string) => {
-    const newContact: Contact = { id: Date.now(), name, phone };
-    const updatedContacts = [...contacts, newContact];
+  const saveContacts = async (updatedContacts: Contact[]) => {
     setContacts(updatedContacts);
-
     try {
       await AsyncStorage.setItem("contacts", JSON.stringify(updatedContacts));
     } catch (error) {
-      console.error("Failed to save contact", error);
+      console.error("Failed to save contacts", error);
     }
   };
 
-  // 🗑️ Delete Contact Function
+  const addContact = async (name: string, phone: string) => {
+    const newContact: Contact = {
+      id: Date.now(),
+      name,
+      phone,
+      isFavorite: false,
+    };
+    const updatedContacts = [...contacts, newContact];
+    saveContacts(updatedContacts);
+  };
+
   const deleteContact = async (id: number) => {
     const updatedContacts = contacts.filter((contact) => contact.id !== id);
-    setContacts(updatedContacts);
-
-    try {
-      await AsyncStorage.setItem("contacts", JSON.stringify(updatedContacts));
-    } catch (error) {
-      console.error("Failed to delete contact", error);
-    }
+    saveContacts(updatedContacts);
   };
 
-  return { contacts, addContact, deleteContact };
+  const toggleFavorite = async (id: number) => {
+    const updatedContacts = contacts.map((contact) =>
+      contact.id === id
+        ? { ...contact, isFavorite: !contact.isFavorite }
+        : contact
+    );
+    saveContacts(updatedContacts);
+  };
+
+  return { contacts, addContact, deleteContact, toggleFavorite };
 }
