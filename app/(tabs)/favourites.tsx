@@ -6,31 +6,42 @@ import {
   Pressable,
   Animated,
   FlatList,
-  TouchableOpacity,
 } from "react-native";
-import React, { useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useContacts } from "../../lib/data/contacts";
-import CallButton from "../components/CallButton";
+import { useFocusEffect } from "@react-navigation/native";
 
 const logoUri =
   "https://upload.wikimedia.org/wikipedia/commons/c/ca/Teenage_Mutant_Ninja_Turtles_Mutant_Mayhem_Logo.png";
 
 const Favourites = () => {
-  const { contacts, toggleFavorite } = useContacts();
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const isVisible = useRef(false);
+  const { contacts, reloadContacts } = useContacts();
+  const [isVisible, setIsVisible] = useState(false);
+  const [fadeAnim] = useState(new Animated.Value(0));
 
+  // Get the current favorite contacts
+  const favoriteContacts = contacts.filter((contact) => contact.isFavorite);
+
+  // Reload contacts when the screen comes into focus
+  useFocusEffect(
+    React.useCallback(() => {
+      // Reload contacts from AsyncStorage when screen is focused
+      reloadContacts();
+      return () => {};
+    }, [reloadContacts])
+  );
+
+  // Handle the show/hide button press
   const handlePress = () => {
-    isVisible.current = !isVisible.current;
+    const newVisibility = !isVisible;
+    setIsVisible(newVisibility);
 
     Animated.timing(fadeAnim, {
-      toValue: isVisible.current ? 1 : 0,
-      duration: 1000,
+      toValue: newVisibility ? 1 : 0,
+      duration: 500,
       useNativeDriver: true,
     }).start();
   };
-
-  const favoriteContacts = contacts.filter((contact) => contact.isFavorite);
 
   return (
     <View style={styles.container}>
@@ -38,7 +49,7 @@ const Favourites = () => {
         <Image source={{ uri: logoUri }} style={styles.logo} />
 
         {favoriteContacts.length === 0 ? (
-          <Text >No favorites added</Text>
+          <Text style={styles.noFavoritesText}>No favorites added</Text>
         ) : (
           <FlatList
             data={favoriteContacts}
@@ -55,7 +66,7 @@ const Favourites = () => {
 
       <Pressable style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonText}>
-          {isVisible.current ? "Hide Favorites" : "Show Favorites"}
+          {isVisible ? "Hide Favorites" : "Show Favorites"}
         </Text>
       </Pressable>
     </View>
@@ -76,20 +87,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 20,
   },
-  noContactsContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  noContactsImage: {
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
-    marginBottom: 10,
-  },
-  noContactsText: {
+  noFavoritesText: {
     fontSize: 18,
-    color: "black",
+    textAlign: "center",
+    marginTop: 20,
+    color: "#666",
   },
   contactItem: {
     backgroundColor: "white",
@@ -105,9 +107,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
-  contactInfo: {
-    flex: 1,
-  },
   contactName: {
     fontSize: 18,
     fontWeight: "600",
@@ -115,9 +114,6 @@ const styles = StyleSheet.create({
   contactPhone: {
     fontSize: 14,
     color: "gray",
-  },
-  favoriteButton: {
-    marginLeft: 10,
   },
   button: {
     position: "absolute",
