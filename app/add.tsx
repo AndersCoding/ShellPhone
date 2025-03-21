@@ -9,11 +9,15 @@ import {
 } from "react-native";
 import { useContacts } from "../lib/data/contacts";
 import { useRouter } from "expo-router";
+import { useTheme } from "./context/ThemeContext";
+import { useLanguage } from "../lib/context/LanguageContext";
 
 const backgroundImage = require("@/assets/images/shellphoneBackground.png");
 
 export default function AddContactScreen() {
   const { addContact } = useContacts();
+  const { translations } = useLanguage(); // Get translations
+  const { isDarkMode } = useTheme(); // Get dark mode state
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const router = useRouter();
@@ -26,24 +30,57 @@ export default function AddContactScreen() {
   };
 
   return (
-    <ImageBackground /* source={backgroundImage} */ style={styles.backgroundImage}>
-      <View style={styles.container}>
-        <Text style={styles.header}>Add New Contact</Text>
+    <ImageBackground
+      /* source={backgroundImage} */ style={styles.backgroundImage}
+    >
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: isDarkMode
+              ? "rgba(18, 18, 18, 0.9)"
+              : "rgba(255, 255, 255, 0.8)",
+          },
+        ]}
+      >
+        <Text
+          style={[styles.header, { color: isDarkMode ? "#FFFFFF" : "#000000" }]}
+        >
+          {translations.addNewContact} {/* Use translated text */}
+        </Text>
         <TextInput
-          style={styles.input}
-          placeholder="Enter Name"
+          style={[
+            styles.input,
+            {
+              backgroundColor: isDarkMode ? "#333333" : "white",
+              color: isDarkMode ? "#FFFFFF" : "#000000",
+              borderColor: isDarkMode ? "#555555" : "#ccc",
+            },
+          ]}
+          placeholder={translations.enterName} // Use translated text
+          placeholderTextColor={isDarkMode ? "#AAAAAA" : "#999999"}
           value={name}
           onChangeText={setName}
         />
         <TextInput
-          style={styles.input}
-          placeholder="Enter Phone Number"
+          style={[
+            styles.input,
+            {
+              backgroundColor: isDarkMode ? "#333333" : "white",
+              color: isDarkMode ? "#FFFFFF" : "#000000",
+              borderColor: isDarkMode ? "#555555" : "#ccc",
+            },
+          ]}
+          placeholder={translations.enterPhoneNumber} // Use translated text
+          placeholderTextColor={isDarkMode ? "#AAAAAA" : "#999999"}
           keyboardType="phone-pad"
           value={phone}
           onChangeText={setPhone}
         />
         <TouchableOpacity onPress={handleAddContact} style={styles.button}>
-          <Text style={styles.buttonText}>Save Contact</Text>
+          <Text style={styles.buttonText}>
+            {translations.saveContact} {/* Use translated text */}
+          </Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>

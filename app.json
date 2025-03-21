@@ -4,12 +4,17 @@
     "slug": "ShellPhone",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/ralphcorgiIcon.png",
+    "icon": "./assets/images/IconNoBackground.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": {
+        "dark": "./assets/images/IconNoBackground.png",
+        "light": "./assets/images/IconNoBackground.png",
+        "tinted": "./assets/images/IconNoBackground.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -20,16 +25,22 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/IconNoBackground.png"
     },
-    "splash": {
-      "image": "./assets/images/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#000000"
-    },
-    "plugins": ["expo-router", "expo-splash-screen"],
+    "plugins": [
+      "expo-router"
+      // Hvis du bruker din egen SplashScreenView, trenger du ikke å inkludere en ekstra expo-splash-screen-plugin her.
+    ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "e03eaf15-7e53-4362-9d34-efd06ff80504"
+      }
     }
   }
 }

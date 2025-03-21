@@ -6,16 +6,21 @@ import {
   Pressable,
   Animated,
   FlatList,
+  SafeAreaView,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useContacts } from "../../lib/data/contacts";
 import { useFocusEffect } from "@react-navigation/native";
+import { useTheme } from "../context/ThemeContext";
+import { useLanguage } from "@/lib/context/LanguageContext";
 
 const logoUri =
   "https://upload.wikimedia.org/wikipedia/commons/c/ca/Teenage_Mutant_Ninja_Turtles_Mutant_Mayhem_Logo.png";
 
 const Favourites = () => {
   const { contacts, reloadContacts } = useContacts();
+  const { isDarkMode } = useTheme();
+  const { translations } = useLanguage(); // Get translations
   const [isVisible, setIsVisible] = useState(false);
   const [fadeAnim] = useState(new Animated.Value(0));
 
@@ -25,7 +30,6 @@ const Favourites = () => {
   // Reload contacts when the screen comes into focus
   useFocusEffect(
     React.useCallback(() => {
-      // Reload contacts from AsyncStorage when screen is focused
       reloadContacts();
       return () => {};
     }, [reloadContacts])
@@ -44,20 +48,51 @@ const Favourites = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        { backgroundColor: isDarkMode ? "#121212" : "#F2F2F2" },
+      ]}
+    >
       <Animated.View style={{ opacity: fadeAnim }}>
         <Image source={{ uri: logoUri }} style={styles.logo} />
 
         {favoriteContacts.length === 0 ? (
-          <Text style={styles.noFavoritesText}>No favorites added</Text>
+          <Text
+            style={[
+              styles.noFavoritesText,
+              { color: isDarkMode ? "#FFFFFF" : "#000000" },
+            ]}
+          >
+            {translations.noFavoritesAdded} {/* Use translated text */}
+          </Text>
         ) : (
           <FlatList
             data={favoriteContacts}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View style={styles.contactItem}>
-                <Text style={styles.contactName}>{item.name}</Text>
-                <Text style={styles.contactPhone}>{item.phone}</Text>
+              <View
+                style={[
+                  styles.contactItem,
+                  { backgroundColor: isDarkMode ? "#1E1E1E" : "#FFFFFF" },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.contactName,
+                    { color: isDarkMode ? "#FFFFFF" : "#000000" },
+                  ]}
+                >
+                  {item.name}
+                </Text>
+                <Text
+                  style={[
+                    styles.contactPhone,
+                    { color: isDarkMode ? "#AAAAAA" : "#666" },
+                  ]}
+                >
+                  {item.phone}
+                </Text>
               </View>
             )}
           />
@@ -66,10 +101,14 @@ const Favourites = () => {
 
       <Pressable style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonText}>
-          {isVisible ? "Hide Favorites" : "Show Favorites"}
+          {
+            isVisible
+              ? translations.hideFavorites // Use translated text
+              : translations.showFavorites // Use translated text
+          }
         </Text>
       </Pressable>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -78,7 +117,6 @@ export default Favourites;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
     padding: 20,
   },
   logo: {
