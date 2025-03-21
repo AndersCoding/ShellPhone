@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { Stack, Slot } from "expo-router";
 import SplashScreenView from "./components/SplashScreenView"; // juster stien etter behov
 import { ThemeProvider } from "./context/ThemeContext";
-import { LanguageProvider } from "@/lib/context/LanguageContext";
+import { LanguageProvider } from "@/app/context/LanguageContext";
 
 export default function RootLayout() {
   const [showSplash, setShowSplash] = useState(true);

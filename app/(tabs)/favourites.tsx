@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { useContacts } from "../../lib/data/contacts";
 import { useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "../context/ThemeContext";
-import { useLanguage } from "@/lib/context/LanguageContext";
+import { useLanguage } from "@/app/context/LanguageContext";
 
 const logoUri =
   "https://upload.wikimedia.org/wikipedia/commons/c/ca/Teenage_Mutant_Ninja_Turtles_Mutant_Mayhem_Logo.png";

@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useTheme } from "../context/ThemeContext";
-import { useLanguage } from "@/lib/context/LanguageContext";
+import { useLanguage } from "@/app/context/LanguageContext";
 
 const Settings = () => {
   const { isDarkMode, toggleTheme } = useTheme();

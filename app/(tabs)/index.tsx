@@ -13,7 +13,7 @@ import { useContacts } from "../../lib/data/contacts";
 import CallButton from "../components/CallButton";
 import { Link } from "expo-router";
 import { useTheme } from "../context/ThemeContext";
-import { useLanguage } from "@/lib/context/LanguageContext";
+import { useLanguage } from "@/app/context/LanguageContext";
 
 const noContacts = require("@/assets/images/noContacts.png");
 

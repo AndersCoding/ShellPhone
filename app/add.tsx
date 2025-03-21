@@ -10,7 +10,7 @@ import {
 import { useContacts } from "../lib/data/contacts";
 import { useRouter } from "expo-router";
 import { useTheme } from "./context/ThemeContext";
-import { useLanguage } from "../lib/context/LanguageContext";
+import { useLanguage } from "./context/LanguageContext";
 
 const backgroundImage = require("@/assets/images/shellphoneBackground.png");
 
