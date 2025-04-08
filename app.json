@@ -1,5 +1,6 @@
 {
   "expo": {
+      "plugins": ["react-native-reanimated/plugin"],
     "name": "ShellPhone",
     "slug": "ShellPhone",
     "version": "1.0.0",

@@ -118,13 +118,13 @@ export default function Index() {
       <View style={styles.navigationContainer}>
         {/* Map Button */}
         <Link href="../components/map" asChild>
-          <TouchableOpacity
-            style={[
+          <TouchableOpacity style={styles.mapButton}
+       /*      style={[
               styles.navigationButton,
               {
                 backgroundColor: isDarkMode ? "#007AFF" : "#1E90FF",
               },
-            ]}
+            ]} */
           >
             <Text style={styles.navigationIcon}>🗺️</Text>
             <Text
@@ -139,14 +139,9 @@ export default function Index() {
         </Link>
 
         {/* Ninja Quiz Button */}
-        <Link href="../components/ninjaQuiz" asChild>
+        <Link href="../components/ninjaMap" asChild>
           <TouchableOpacity
-            style={[
-              styles.navigationButton,
-              {
-                backgroundColor: isDarkMode ? "#32CD32" : "#28A745",
-              },
-            ]}
+            style={styles.ninjaButton}
           >
             <Text style={styles.navigationIcon}>🥋</Text>
             <Text
@@ -257,5 +252,34 @@ const styles = StyleSheet.create({
   navigationButtonText: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+  mapButton: {
+    backgroundColor: "#007AFF",
+    width: 140,
+    height: 140,
+    borderRadius: 24,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+
+  ninjaButton: {
+    backgroundColor: "#32CD32",
+    width: 140,
+    height: 140,
+    borderRadius: 24,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
   },
 });

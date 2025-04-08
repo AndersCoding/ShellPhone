@@ -1,16 +1,16 @@
 // _layout.tsx
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
-import { Stack, Slot } from "expo-router";
-import SplashScreenView from "./components/SplashScreenView"; // juster stien etter behov
+import { StyleSheet } from "react-native";
+import { Stack } from "expo-router";
+import SplashScreenView from "./components/SplashScreenView";
 import { ThemeProvider } from "./context/ThemeContext";
 import { LanguageProvider } from "@/app/context/LanguageContext";
+import { GestureHandlerRootView } from "react-native-gesture-handler"; // 👈 denne!
 
 export default function RootLayout() {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    // La splash-skjermen vises i 3 sekunder før du går videre
     const timer = setTimeout(() => {
       setShowSplash(false);
     }, 3000);
@@ -22,21 +22,16 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider>
-      <LanguageProvider>
-        {/* Add the LanguageProvider here */}
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="add" options={{ title: "Add Contact" }} />
-        </Stack>
-      </LanguageProvider>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      {/* 👈 pakk hele appen */}
+      <ThemeProvider>
+        <LanguageProvider>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="add" options={{ title: "Add Contact" }} />
+          </Stack>
+        </LanguageProvider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0B2C41",
-  },
-});
